@@ -42,6 +42,7 @@ void Player::flee(vector<Enemy *> enemies) {
     bool fleed = false;
     cout <<CYAN<<"> You have attempted to flee"<<RESET<< endl;
     if (this->getSpeed() > fastestEnemy->getSpeed()) {
+        cout << "You are faster than all your enemies!" << endl;
         fleed = true;
     } else {
         srand(time(NULL));
