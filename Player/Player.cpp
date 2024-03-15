@@ -32,7 +32,7 @@ void Player::takeDamage(int damage) {
     setHealth(health - damage);
     cout << "You have taken " << damage << " damage" << endl;
     if (health <= 0) {
-        cout << "You have died" << endl;
+        cout <<RED<< "You have died" <<RESET<<endl;
     }
 }
 
