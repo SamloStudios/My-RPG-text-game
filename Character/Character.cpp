@@ -4,9 +4,10 @@
 #include "Character.h"
 #include <cstring>
 #include <sstream>
+#include <iostream>
 
 Character::Character(char _name[30], int _health, int _attack, int _defense, int _speed, bool _isPlayer) {
-    strcpy(name, _name);
+    if (_name != nullptr) strcpy(name, _name);
     health = _health;
     attack = _attack;
     defense = _defense;
