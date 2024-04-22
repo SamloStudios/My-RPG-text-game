@@ -25,7 +25,6 @@ private:
     priority_queue<Action> actions;
 
     void prepareCombat();
-    Character* getTarget(Character* target);
     void registerActions();
     void executeActions();
 

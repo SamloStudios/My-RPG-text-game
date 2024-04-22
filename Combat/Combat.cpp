@@ -4,6 +4,7 @@
 #include "Combat.h"
 #include <iostream>
 #include <algorithm>
+#include <conio.h>
 
 using namespace std;
 
@@ -65,6 +66,11 @@ void Combat::doCombat() {
     }
     else {
         cout<<"The enemies have won the combat - Game Over"<<endl;
+        _beep(180, 800);
+        _beep(120, 650);
+        _beep(90, 1000);
+        cout << "Goodluck next time lol" << endl;
+        getch();
     }
 }
 
