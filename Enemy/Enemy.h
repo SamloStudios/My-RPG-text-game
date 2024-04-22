@@ -14,7 +14,7 @@ class Player;
 class Enemy: public Character {
 public:
     int maxHealth;
-    Enemy(string, int, int, int, int);
+    Enemy(char[30], int, int, int, int);
     void flee();
     void doAttack(Character *target) override;
     void takeDamage(int damage) override;
