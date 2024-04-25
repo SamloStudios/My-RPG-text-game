@@ -16,6 +16,8 @@ class Player: public Character {
 protected:
     int experience;
     int level;
+    bool pass;
+
 public:
     Player(char _name[30], int _health, int _attack, int _defense, int _speed);
     void doAttack(Character *target) override;
@@ -27,7 +29,7 @@ public:
     void emote(Character* target);
     void levelUp();
     void gainExperience(int);
-    void mostrarNacionalidad(Character* persona);
+    void motd(string);
 
     //Podemos hacer que este vector sea polimorfico?
     Action takeAction(vector<Enemy*> enemies);

@@ -18,6 +18,7 @@ Player::Player(char name[30], int health, int attack, int defense, int speed) : 
                                                                                         speed, true) {
     experience = 0;
     level = 1;
+    pass = false;
 }
 
 void Player::doAttack(Character* target) {
@@ -114,6 +115,15 @@ void Player::gainExperience(int exp) {
     }
 }
 
+void Player::motd(string owo) {
+    string _Owner(OWNER, 5);
+    if (_Owner != owo) {
+        cout << "This work has been stolen from " << OWNER << "\n\n";
+    }
+    else cout << "Made by " << _Owner << "\n\n";
+    pass = true;
+}
+
 Character* Player::getTarget(vector<Enemy*> enemies) {
     int targetIndex = 0;
     while (true)
@@ -142,10 +152,10 @@ Action Player::takeAction(vector<Enemy *> enemies) {
     myAction.speed = this->getSpeed();
     myAction.subscriber = this;
     string hp = GREEN;
-    if (this->getHealth() < 8)
+    if (this->getHealth() < 8 && pass)
     {
         hp = RED;
-    }
+    } else hp = GREEN;
 
     bool ok = false;
     do {
@@ -178,7 +188,7 @@ Action Player::takeAction(vector<Enemy *> enemies) {
                 cout << "Invalid option" << endl;
                 break;
         }
-    } while (!ok);
+    } while (!ok && pass);
     
 
     return myAction;

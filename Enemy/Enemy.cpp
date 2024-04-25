@@ -1,5 +1,6 @@
 //
 // Created by Victor Navarro on 13/02/24.
+// Modified and now owned by Samlo
 //
 #include "Enemy.h"
 #include <iostream>

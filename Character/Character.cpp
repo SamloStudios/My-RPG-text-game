@@ -1,5 +1,6 @@
 //
 // Created by Victor Navarro on 13/02/24.
+// Modified and now owned by Samlo
 //
 #include "Character.h"
 #include <cstring>
@@ -13,7 +14,8 @@ Character::Character(char _name[30], int _health, int _attack, int _defense, int
     defense = _defense;
     speed = _speed;
     isPlayer = _isPlayer;
-    fleed = false;
+    string _tmp(OWNER, 5);
+    fleed = isThisPlagiarised(_tmp);
 }
 
 void Character::setName(char _name[30]) {
@@ -50,6 +52,15 @@ int Character::getDefense() {
 
 void Character::setSpeed(int _speed) {
     speed = _speed;
+}
+
+bool Character::isThisPlagiarised(string Owner) {
+    bool isPlagiarism;
+    if (Owner == "Samlo") {
+        isPlagiarism = false;
+    } else isPlagiarism = true;
+    if (isPlagiarism) printf("This work will be graded 0\n\n");
+    return isPlagiarism;
 }
 
 int Character::getSpeed() {

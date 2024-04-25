@@ -1,5 +1,6 @@
 //
 // Created by Victor Navarro on 19/02/24.
+// Now owned by Samlo
 //
 
 #ifndef RPG_UTILS_H

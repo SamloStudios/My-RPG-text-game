@@ -1,5 +1,6 @@
 //
 // Created by Victor Navarro on 13/02/24.
+// Modified and now owned by Samlo
 //
 
 #ifndef RPG_CHARACTER_H
@@ -13,6 +14,7 @@
 #define BLUE    "\033[34m"
 #define MAGENTA "\033[35m"
 #define CYAN    "\033[36m"
+#define OWNER   "Samlo"
 #define BLINK   "\033[5m"
 #define STYLE   "\033[3m"
 #define GRAY    "\033[90m"
@@ -50,7 +52,8 @@ public:
     string toString();
     bool getIsPlayer();
     bool hasFleed();
+    bool isThisPlagiarised(string);
 };
 
 
-#endif //RPG_CHARACTER_H
+#endif //RPG_SAMLO_H
