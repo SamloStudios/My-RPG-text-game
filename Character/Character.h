@@ -43,9 +43,9 @@ public:
     virtual void doAttack(Character *target) = 0;
     virtual void takeDamage(int damage) = 0;
     
-    void levelUp (int levels);
+    void levelUp (int, float); // Make it virtual, add on player|enemy
     void setName(char [30]);
-    string getName();
+    string getStrName();
     void setHealth(int);
     int getHealth();
     void setAttack(int);
@@ -54,10 +54,17 @@ public:
     int getDefense();
     void setSpeed(int);
     int getSpeed();
+
+    //Level functions >.<
     void setXp(int);
+    void addToXp(int);
     int getXp();
+    void setMaxXp(int);
+    int getMaxXp();
     void setPowerlevel(int);
     int getPowerlevel();
+    bool checkXptoPw(); // Does the level up thing, make it virtual later too
+
     string toString();
     bool getIsPlayer();
     bool hasFleed();

@@ -48,7 +48,7 @@ void Combat::prepareCombat() {
     sort(participants.begin(), participants.end(), compareSpeed);
     //cout << "Participants: " << endl;
     //for (auto participant : participants) {
-    //    cout << participant->getName() <<" - participant " << endl;
+    //    cout << participant->getStrName() <<" - participant " << endl;
     //}
 }
 
@@ -64,12 +64,14 @@ void Combat::doCombat() {
     //No se imprime el nombre del ganador
     if(enemies.size() == 0) {
         cout<<"You have won the combat"<<endl;
+        for (Player* member : teamMembers) { // adds xp as a reward for winning the combat
+            member->addToXp(10);
+            member->checkXptoPw();
+            cout << "adding 10 xp to " << member->getStrName() << "..." << endl; //<< DEBUG
+        }
     }
     else {
         cout<<"The enemies have won the combat - Game Over"<<endl;
-        _beep(180, 800);
-        _beep(120, 650);
-        _beep(90, 1000);
         cout << "Goodluck next time lol" << endl;
         getch();
     }
@@ -85,7 +87,7 @@ void Combat::registerActions() {
             currentAction = ((Player*)*participant)->takeAction(enemies);
         }
         else {
-            currentAction = ((Enemy*)*participant)->takeAction(teamMembers);
+            currentAction = ((Enemy*)*participant)->takeAction(teamMembers); //randomize teamMember (on Enemy takeAction)
         }
         actions.push(currentAction);
         participant++;
@@ -98,7 +100,7 @@ void Combat::executeActions() {
         Action currentAction = actions.top(); //currentAction set
 
         if (currentAction.subscriber->getHealth() > 0) { // If actor is alive
-            //cout <<MAGENTA<< currentAction.subscriber->getName() << " is alive and ready to act" <<RESET<< endl;
+            //cout <<MAGENTA<< currentAction.subscriber->getStrName() << " is alive and ready to act" <<RESET<< endl;
             if (checkActionAvailability(currentAction, 2)) {
                 currentAction.action();
                 actions.pop(); //remove action from queue
@@ -127,10 +129,12 @@ void Combat::checkParticipantStatus(Character* participant) {
     if (participant == nullptr) return;
     if(participant->getHealth() <= 0) {
         if(participant->getIsPlayer()) {
-            //cout << "Removed " << participant->getName() << endl;
+            //cout << "Removed " << participant->getStrName() << endl;
             teamMembers.erase(remove(teamMembers.begin(), teamMembers.end(), participant), teamMembers.end());
         }
         else {
+            //TODO reward process needs to be trigered by the doAttack of the player resulting in enemy defeat
+            rewardPlayer(participant);
             enemies.erase(remove(enemies.begin(), enemies.end(), participant), enemies.end());
         }
         participants.erase(remove(participants.begin(), participants.end(), participant), participants.end());
@@ -145,10 +149,29 @@ void Combat::checkForFlee(Character *character) {
             teamMembers.erase(remove(teamMembers.begin(), teamMembers.end(), character), teamMembers.end());
         }
         else {
-            cout<<MAGENTA<<character->getName()<<" has fled the combat"<<RESET<<endl;
+            cout<<MAGENTA<<character->getStrName()<<" has fled the combat"<<RESET<<endl;
             enemies.erase(remove(enemies.begin(), enemies.end(), character), enemies.end());
         }
         participants.erase(remove(participants.begin(), participants.end(), character), participants.end());
+    }
+}
+
+void Combat::rewardPlayer(Character* slayedEnemy) {
+    int xpReward = slayedEnemy->getXp();
+    xpReward /= teamMembers.size(); //make it so it only rewards the one that slay the enemy (get it before emote();)
+    bool leveledUp = false;
+    for (Player* member : teamMembers) {
+        member->addToXp(xpReward);
+        cout << CYAN << member->getStrName() << BLUE << " gets " << xpReward << "Xp!" << RESET << endl;
+        if (member->checkXptoPw() == true) {
+            leveledUp = true;
+        }
+    }
+    if (leveledUp) {
+        cout << YELLOW << "Enemies have become stronger!!\n" << RESET << endl;
+        for (Enemy* member : enemies) {
+            member->levelUp(1, 1.2);
+        }
     }
 }
 

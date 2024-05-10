@@ -24,7 +24,7 @@ Player::Player(char name[30], int health, int attack, int defense, int speed) : 
 void Player::doAttack(Character* target) {
     int rolledAttack = getRolledAttack(getAttack());
     int trueDamage = target->getDefense() > rolledAttack ? 0 : rolledAttack - target->getDefense();
-    cout << CYAN << "> You have atacked " << target->getName() <<RESET<< endl;
+    cout << CYAN << "> You have atacked " << target->getStrName() <<RESET<< endl;
     target->takeDamage(trueDamage);
     if (target->getHealth() <= 0) emote(target);
 }
@@ -68,7 +68,7 @@ void Player::flee(vector<Enemy *> enemies) {
             cout << "  You could use some potions to increase your speed..." << endl;
             break;
         default:
-            cout << "  Looks like " << fastestEnemy->getName() << " is faster than you..." << endl;
+            cout << "  Looks like " << fastestEnemy->getStrName() << " is faster than you..." << endl;
             break;
         }
         cout << RESET;
@@ -84,36 +84,36 @@ void Player::emote(Character* target) {
     switch (emote_index)
     {
     case 1:
-        cout << "Guess " << target->getName() << " was just a joke..." << endl;
+        cout << "Guess " << target->getStrName() << " was just a joke..." << endl;
         break;
     case 2:
-        cout << "My sister could have beaten " << target->getName() << endl;
+        cout << "My sister could have beaten " << target->getStrName() << endl;
         break;
     case 3:
         cout << "FATALITY" << endl;
         break;
     default:
-        cout << "Guess " << target->getName() << " was just a noob lol" << endl;
+        cout << "Guess " << target->getStrName() << " was just a noob lol" << endl;
         break;
     }
     cout << RESET;
 }
 
-void Player::levelUp() {
-    level++;
-    setHealth(getHealth() + 10);
-    setAttack(getAttack() + 5);
-    setDefense(getDefense() + 5);
-    setSpeed(getSpeed() + 5);
-}
+//void Player::levelUp() { // DEPRECATED level up
+//    level++;
+//    setHealth(getHealth() + 10);
+//    setAttack(getAttack() + 5);
+//    setDefense(getDefense() + 5);
+//    setSpeed(getSpeed() + 5);
+//}
 
-void Player::gainExperience(int exp) {
-    experience += exp;
-    if (experience >= 100) {
-        levelUp();
-        experience = 0;
-    }
-}
+//void Player::gainExperience(int exp) {
+//    experience += exp;
+//    if (experience >= 100) {
+//        levelUp();
+//        experience = 0;
+//    }
+//}
 
 void Player::motd(string owo) {
     string _Owner(OWNER, 5);
@@ -130,7 +130,7 @@ Character* Player::getTarget(vector<Enemy*> enemies) {
     {
         cout << "Choose a target" << endl;
         for (int i = 0; i < enemies.size(); i++) {
-            cout <<RED<< i + 1 << ". " << enemies[i]->getName()<<RESET << endl;
+            cout <<RED<< i + 1 << ". " << enemies[i]->getStrName()<<RESET << endl;
         }
         cin >> targetIndex;
 
@@ -159,7 +159,7 @@ Action Player::takeAction(vector<Enemy *> enemies) {
 
     bool ok = false;
     do {
-        cout << CYAN << " - [" << this->getName() << "]" << YELLOW << " ---- |+| ----(" << hp << "HP: " << this->getHealth() << YELLOW << ")---- |#| ----";
+        cout << CYAN << " - [" << this->getStrName() << "]" << YELLOW << " ---- |+| ----(" << hp << "HP: " << this->getHealth() << YELLOW << ")---- |#| ----";
         cout <<"(" << BLUE << "DEF: "<<this->getDefense()<< YELLOW <<")----|%|----(" << RESET << "SP: " << this->getSpeed() << YELLOW <<")----" << RESET << endl;
         cout <<"Choose an action"<< endl;
         cout << "1. Attack" << endl;

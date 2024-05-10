@@ -19,21 +19,11 @@ Character::Character(char _name[30], int _health, int _attack, int _defense, int
     fleed = isThisPlagiarised(_tmp);
 }
 
-void Character::levelUp(int levels) {
-    plevel += levels;
-    health = maxHealth * 1.2;
-    maxHealth = health;
-    attack *= 1.2;
-    defense *= 1.2;
-    speed *= 1.2;
-    maXp = 100 * (plevel * 1.2); // 1.2 < mk global var (struct thingy)
-}
-
 void Character::setName(char _name[30]) {
     strcpy(name, _name);
 }
 
-string Character::getName() {
+string Character::getStrName() {
     return name;
 }
 
@@ -82,8 +72,20 @@ void Character::setXp(int _xp) {
     xp = _xp;
 }
 
+void Character::addToXp(int toAdd) {
+    xp += toAdd;
+}
+
 int Character::getXp() {
     return xp;
+}
+
+int Character::getMaxXp() {
+    return maXp;
+}
+
+void Character::setMaxXp(int _theXp) {
+    maXp = _theXp;
 }
 
 void Character::setPowerlevel(int level) {
@@ -92,6 +94,29 @@ void Character::setPowerlevel(int level) {
 
 int Character::getPowerlevel() {
     return plevel;
+}
+
+bool Character::checkXptoPw() {
+    int _maXp = (int)this->getMaxXp(); //cut decimals on maXp
+    int levelsToUp = (int)(getXp() / _maXp); //get levels to go up, example: 200 / 100 = 2
+    bool hasUpgraded = false;
+    if (this->getXp() > this->getMaxXp() && this->getHealth() != 0) {
+        this->levelUp(levelsToUp, 1.2); // TODO - change 1.2 multiplier
+        cout << CYAN << BOLD << this->getStrName() <<" has leveled up!! \n his new level is: " << YELLOW << plevel << RESET << endl;
+        hasUpgraded = true;
+    }
+    return hasUpgraded;
+}
+
+void Character::levelUp(int levels, float multiplier) {
+    plevel += levels;
+
+    health = maxHealth * multiplier + 1;
+    maxHealth = health;
+    attack = (attack*multiplier) + 1;
+    defense = (defense*multiplier) + 1;
+    speed = (speed*multiplier) + 1;
+    maXp = 100 * (plevel * multiplier);
 }
 
 string Character::toString() {

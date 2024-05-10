@@ -27,8 +27,6 @@ public:
 
     void flee(vector<Enemy*> enemies);
     void emote(Character* target);
-    void levelUp();
-    void gainExperience(int);
     void motd(string);
 
     //Podemos hacer que este vector sea polimorfico?

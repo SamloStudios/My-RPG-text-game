@@ -16,13 +16,13 @@ int getRolledAttack(int attack) {
 
 Enemy::Enemy(char name[30], int health, int attack, int defense, int speed, int _plevel) : Character(name, health, attack, defense, speed, false) {
     plevel = _plevel;
-    maXp *= plevel; // < 1.2mkvar
+    maXp *= plevel;
     xp = 10 * plevel;  //TODO - Refactor the constructor to encapsule a struct with all damn definitions
     //also make somethin here idk that gives the enemies random stats (based on the struct contents)
 }
 
 void Enemy::flee() {
-    cout << "> " << this->getName() << " has fleed!" << endl;
+    cout << "> " << this->getStrName() << " has fleed!" << endl;
     this->fleed = true;
     //cout << this->fleed << "fleed Enemy" << endl;
 }
@@ -30,17 +30,18 @@ void Enemy::flee() {
 void Enemy::doAttack(Character *target) {
     int rolledAttack = getRolledAttack(getAttack());
     int trueDamage = target->getDefense() > rolledAttack ? 0 : rolledAttack - target->getDefense();
-    cout << "> " << this->getName() << " has attacked you!" << endl;
+    cout << "> " << this->getStrName() << " has attacked you!" << endl;
     target->takeDamage(trueDamage);
 }
 
 void Enemy::takeDamage(int damage) {
     setHealth(getHealth() - damage);
     if(getHealth() <= 0) {
-        cout<<RED<<getName()<<" has died"<<RESET<<endl;
+        cout<<RED<<getStrName()<<" has died"<<RESET<<endl;
     }
     else {
-        cout<<getName()<<" has taken " << damage << " damage" << endl;
+        cout<<getStrName()<<" has taken " << damage << " damage" << endl;
+        xp++;
     }
 }
 
@@ -65,7 +66,7 @@ Action Enemy::takeAction(vector<Player *> player) {
     Character* target = getTarget(player);
 
     // flee if dying
-    if ((this->getHealth() < (this->maxHealth * 0.50)) && rand() % 100 < 100) //Reajustar al 5%
+    if ((this->getHealth() < (this->maxHealth * 0.50)) && rand() % 100 < 5) //Reajustar al 5%
     {
         myAction.action = [this, target]() {
             flee();

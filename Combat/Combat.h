@@ -32,6 +32,7 @@ private:
 
     void checkParticipantStatus(Character* participant);
     void checkForFlee(Character* character);
+    void rewardPlayer(Character* slayedEnemy);
 
     bool checkActionAvailability(Action currentAction, int checkType);
 
