@@ -30,7 +30,7 @@ void Enemy::flee() {
 void Enemy::doAttack(Character *target) {
     int rolledAttack = getRolledAttack(getAttack());
     int trueDamage = target->getDefense() > rolledAttack ? 0 : rolledAttack - target->getDefense();
-    cout << "> " << this->getStrName() << " has attacked you!" << endl;
+    cout << "> " << this->getStrName() <<YELLOW<<" {lvl:" <<RED<< plevel <<YELLOW<< ", xp: " <<MAGENTA<< xp <<YELLOW<<"}"<<RESET<< " has attacked you!" << endl;
     target->takeDamage(trueDamage);
 }
 
@@ -41,7 +41,6 @@ void Enemy::takeDamage(int damage) {
     }
     else {
         cout<<getStrName()<<" has taken " << damage << " damage" << endl;
-        xp++;
     }
 }
 
@@ -57,6 +56,18 @@ Character* Enemy::getTarget(vector<Player *> teamMembers) {
     }
 
     return teamMembers[targetIndex];
+}
+
+void Enemy::levelUp(float multiplier) {
+    plevel++;
+
+    health = maxHealth * multiplier + 1;
+    maxHealth = health;
+    attack = (attack * multiplier) + 1;
+    defense = (defense * multiplier) + 1;
+    speed = (speed * multiplier) + 1;
+
+    xp *= plevel * multiplier;
 }
 
 Action Enemy::takeAction(vector<Player *> player) {

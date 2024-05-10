@@ -96,29 +96,6 @@ int Character::getPowerlevel() {
     return plevel;
 }
 
-bool Character::checkXptoPw() {
-    int _maXp = (int)this->getMaxXp(); //cut decimals on maXp
-    int levelsToUp = (int)(getXp() / _maXp); //get levels to go up, example: 200 / 100 = 2
-    bool hasUpgraded = false;
-    if (this->getXp() > this->getMaxXp() && this->getHealth() != 0) {
-        this->levelUp(levelsToUp, 1.2); // TODO - change 1.2 multiplier
-        cout << CYAN << BOLD << this->getStrName() <<" has leveled up!! \n his new level is: " << YELLOW << plevel << RESET << endl;
-        hasUpgraded = true;
-    }
-    return hasUpgraded;
-}
-
-void Character::levelUp(int levels, float multiplier) {
-    plevel += levels;
-
-    health = maxHealth * multiplier + 1;
-    maxHealth = health;
-    attack = (attack*multiplier) + 1;
-    defense = (defense*multiplier) + 1;
-    speed = (speed*multiplier) + 1;
-    maXp = 100 * (plevel * multiplier);
-}
-
 string Character::toString() {
     string _name(name, 30);
     return "Name: " + _name + "\nHealth: " + to_string(health) + "\nAttack: " + to_string(attack) + "\nDefense: " + to_string(defense) + "\nSpeed: " + to_string(speed);

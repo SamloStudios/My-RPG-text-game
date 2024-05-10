@@ -25,6 +25,8 @@ public:
 
     Character* getTarget(vector<Enemy*> enemies);
 
+    int checkXptoPw(); // Does the level up decision
+    void levelUp(float);
     void flee(vector<Enemy*> enemies);
     void emote(Character* target);
     void motd(string);

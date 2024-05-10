@@ -13,6 +13,7 @@ int main() {
     string codeOwner = "Samlo";
 
     Player *player = new Player("Victor", 50, 7, 2, 5);
+    // char name[30], int health, int attack, int defense, int speed, int _plevel
     Enemy *enemy = new Enemy("Goblin", 10, 5, 2, 7, 1);
     enemy->addToXp(250); // ADDED XP WITH DEMONSTRATION PURPOSES
     Enemy *enemy2 = new Enemy("Orc", 20, 4, 2, 2, 1);

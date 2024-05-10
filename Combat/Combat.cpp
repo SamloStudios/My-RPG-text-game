@@ -159,20 +159,20 @@ void Combat::checkForFlee(Character *character) {
 void Combat::rewardPlayer(Character* slayedEnemy) {
     int xpReward = slayedEnemy->getXp();
     xpReward /= teamMembers.size(); //make it so it only rewards the one that slay the enemy (get it before emote();)
-    bool leveledUp = false;
+    int levelsUp = 0;
     for (Player* member : teamMembers) {
         member->addToXp(xpReward);
         cout << CYAN << member->getStrName() << BLUE << " gets " << xpReward << "Xp!" << RESET << endl;
-        if (member->checkXptoPw() == true) {
-            leveledUp = true;
+
+        levelsUp = member->checkXptoPw();
+        if (levelsUp > 0) {
+            cout << YELLOW << "Since you have leveled up, enemies have become stronger!!\n" << RESET << endl;
+            for (Enemy* member : enemies) {
+                member->levelUp(1.2);
+            }
         }
     }
-    if (leveledUp) {
-        cout << YELLOW << "Enemies have become stronger!!\n" << RESET << endl;
-        for (Enemy* member : enemies) {
-            member->levelUp(1, 1.2);
-        }
-    }
+
 }
 
 /// <summary>

@@ -99,21 +99,32 @@ void Player::emote(Character* target) {
     cout << RESET;
 }
 
-//void Player::levelUp() { // DEPRECATED level up
-//    level++;
-//    setHealth(getHealth() + 10);
-//    setAttack(getAttack() + 5);
-//    setDefense(getDefense() + 5);
-//    setSpeed(getSpeed() + 5);
-//}
+void Player::levelUp(float multiplier) {
+    while (xp > maXp) {
+        plevel++;
 
-//void Player::gainExperience(int exp) {
-//    experience += exp;
-//    if (experience >= 100) {
-//        levelUp();
-//        experience = 0;
-//    }
-//}
+        health = maxHealth * multiplier + 1;
+        maxHealth = health;
+        attack = (attack * multiplier) + 1;
+        defense = (defense * multiplier) + 1;
+        speed = (speed * multiplier) + 1;
+
+        xp = xp - maXp;
+        maXp = 100 * (plevel * multiplier);
+    }
+}
+
+int Player::checkXptoPw() {
+    int levelsUpgraded = 0;
+    int _initiaLevel = this->getPowerlevel();
+    if (this->getXp() > this->getMaxXp() && this->getHealth() != 0) {
+        this->levelUp(1.2); // TODO - change 1.2 multiplier
+        cout << CYAN << BOLD << this->getStrName() << " has leveled up!! \n his new level is: " << YELLOW << plevel << RESET << endl;
+        levelsUpgraded = this->getPowerlevel() - _initiaLevel;
+    }
+    return levelsUpgraded;
+}
+
 
 void Player::motd(string owo) {
     string _Owner(OWNER, 5);
@@ -159,7 +170,7 @@ Action Player::takeAction(vector<Enemy *> enemies) {
 
     bool ok = false;
     do {
-        cout << CYAN << " - [" << this->getStrName() << "]" << YELLOW << " ---- |+| ----(" << hp << "HP: " << this->getHealth() << YELLOW << ")---- |#| ----";
+        cout << CYAN << " - [" << this->getStrName() << "]{" << xp << "/" << maXp << "}" << YELLOW << " ---- |+| ----(" << hp << "HP: " << this->getHealth() << YELLOW << ")---- |#| ----";
         cout <<"(" << BLUE << "DEF: "<<this->getDefense()<< YELLOW <<")----|%|----(" << RESET << "SP: " << this->getSpeed() << YELLOW <<")----" << RESET << endl;
         cout <<"Choose an action"<< endl;
         cout << "1. Attack" << endl;

@@ -18,6 +18,9 @@ public:
     void flee();
     void doAttack(Character *target) override;
     void takeDamage(int damage) override;
+
+    void levelUp(float);
+
     Character* getTarget(vector<Player*> teamMembers);
     Action takeAction(vector<Player*> player);
 };
