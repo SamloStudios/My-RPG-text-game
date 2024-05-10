@@ -27,9 +27,13 @@ class Character {
 protected:
     char name[30] = { 'U','n','n','a','m','e','d' };
     int health;
+    int maxHealth;
     int attack;
     int defense;
     int speed;
+    int xp = 0;
+    int plevel = 1;
+    int maXp = 100;
     bool isPlayer;
     bool fleed;
 
@@ -38,7 +42,8 @@ public:
 
     virtual void doAttack(Character *target) = 0;
     virtual void takeDamage(int damage) = 0;
-
+    
+    void levelUp (int levels);
     void setName(char [30]);
     string getName();
     void setHealth(int);
@@ -49,6 +54,10 @@ public:
     int getDefense();
     void setSpeed(int);
     int getSpeed();
+    void setXp(int);
+    int getXp();
+    void setPowerlevel(int);
+    int getPowerlevel();
     string toString();
     bool getIsPlayer();
     bool hasFleed();

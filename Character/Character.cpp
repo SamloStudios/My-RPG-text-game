@@ -10,12 +10,23 @@
 Character::Character(char _name[30], int _health, int _attack, int _defense, int _speed, bool _isPlayer) {
     if (_name != nullptr) strcpy(name, _name);
     health = _health;
+    maxHealth = _health;
     attack = _attack;
     defense = _defense;
     speed = _speed;
     isPlayer = _isPlayer;
     string _tmp(OWNER, 5);
     fleed = isThisPlagiarised(_tmp);
+}
+
+void Character::levelUp(int levels) {
+    plevel += levels;
+    health = maxHealth * 1.2;
+    maxHealth = health;
+    attack *= 1.2;
+    defense *= 1.2;
+    speed *= 1.2;
+    maXp = 100 * (plevel * 1.2); // 1.2 < mk global var (struct thingy)
 }
 
 void Character::setName(char _name[30]) {
@@ -65,6 +76,22 @@ bool Character::isThisPlagiarised(string Owner) {
 
 int Character::getSpeed() {
     return speed;
+}
+
+void Character::setXp(int _xp) {
+    xp = _xp;
+}
+
+int Character::getXp() {
+    return xp;
+}
+
+void Character::setPowerlevel(int level) {
+    plevel = level;
+}
+
+int Character::getPowerlevel() {
+    return plevel;
 }
 
 string Character::toString() {

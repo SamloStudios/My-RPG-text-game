@@ -14,8 +14,11 @@ int getRolledAttack(int attack) {
     return (rand() % (attack - lowerLimit)) + lowerLimit;
 }
 
-Enemy::Enemy(char name[30], int health, int attack, int defense, int speed) : Character(name, health, attack, defense, speed, false) {
-    maxHealth = health;
+Enemy::Enemy(char name[30], int health, int attack, int defense, int speed, int _plevel) : Character(name, health, attack, defense, speed, false) {
+    plevel = _plevel;
+    maXp *= plevel; // < 1.2mkvar
+    xp = 10 * plevel;  //TODO - Refactor the constructor to encapsule a struct with all damn definitions
+    //also make somethin here idk that gives the enemies random stats (based on the struct contents)
 }
 
 void Enemy::flee() {
